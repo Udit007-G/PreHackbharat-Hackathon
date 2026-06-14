@@ -69,20 +69,24 @@ The recommendation changes because the agent remembers what happened previously.
 
 ## Architecture
 
-Developer Code \
-↓
-Review Engine \
-↓
-Issue Detection \
-↓
-Hindsight Memory Bank \
-↓
-Memory Recall \
-↓
-Recommendation Engine \
-↓
-Adaptive Feedback\
-
+```text
+Developer Code
+      │
+      ▼
+Review Engine
+      │
+      ▼
+Hindsight Memory Bank
+      │
+      ▼
+Memory Recall
+      │
+      ▼
+Recommendation Engine
+      │
+      ▼
+Adaptive Feedback
+```
 ---
 
 ## Features
