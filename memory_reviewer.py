@@ -1,54 +1,75 @@
+import argparse
+from pathlib import Path
+
+from hindsight_memory import create_memory_client
+from recommendation_engine import generate_recommendation
 from reviewer import review_code
 
-from hindsight_client import Hindsight
 
-from config import HINDSIGHT_API_KEY
+def format_review(path: Path, use_hindsight: bool = False) -> str:
+    code = path.read_text(encoding="utf-8")
+    findings = review_code(code)
 
-from recommendation_engine import (
-    generate_recommendation
-)
+    if not findings:
+        return f"No findings in {path}."
 
-client = Hindsight(
-    base_url="https://api.hindsight.vectorize.io",
-    api_key=HINDSIGHT_API_KEY
-)
+    client = create_memory_client(use_hindsight=use_hindsight)
+    sections = []
 
-with open(
-    "sample_code.py",
-    "r"
-) as f:
-    code = f.read()
+    try:
+        for finding in findings:
+            memories = client.recall(finding.message)
+            recommendation = generate_recommendation(finding, memories)
 
-findings = review_code(code)
+            recalled = "\n".join(f"- {memory.text.strip()}" for memory in memories[:3])
+            if not recalled:
+                recalled = "- No relevant memories found."
 
-for finding in findings:
+            sections.append(
+                "\n".join(
+                    [
+                        "=" * 60,
+                        f"{path}:{finding.line}",
+                        f"Rule: {finding.rule_id}",
+                        f"Issue: {finding.message}",
+                        f"Evidence: {finding.evidence}",
+                        "",
+                        "Relevant memories:",
+                        recalled,
+                        "",
+                        "Recommendation:",
+                        recommendation,
+                    ]
+                )
+            )
+    finally:
+        client.close()
 
-    print("\n" + "=" * 50)
+    return "\n\n".join(sections)
 
-    print("CURRENT ISSUE:")
-    print(finding)
 
-    memories = client.recall(
-        bank_id="code-review-memory",
-        query=finding
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Review Python code with memory-aware recommendations."
     )
-
-    print("\nRELEVANT MEMORIES:")
-
-    for memory in memories.results:
-        print("-")
-        print(memory.text)
-
-    recommendation = (
-        generate_recommendation(
-            finding,
-            memories.results
-        )
+    parser.add_argument(
+        "path",
+        nargs="?",
+        default="sample_code.py",
+        help="Python file to review. Defaults to sample_code.py.",
     )
+    parser.add_argument(
+        "--use-hindsight",
+        action="store_true",
+        help="Use Hindsight instead of the local memory_seed.json file.",
+    )
+    return parser
 
-    print("\nFINAL RECOMMENDATION:")
-    print(recommendation)
-try:
-    client.close()
-except:
-    pass
+
+def main() -> None:
+    args = build_parser().parse_args()
+    print(format_review(Path(args.path), use_hindsight=args.use_hindsight))
+
+
+if __name__ == "__main__":
+    main()

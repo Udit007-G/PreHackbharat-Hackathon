@@ -1,0 +1,8 @@
+[
+  {
+    "text": "Issue: Hardcoded Password\nSuggestion: Use environment variables.\nStatus: Ignored"
+  },
+  {
+    "text": "Issue: Debug Print Statement\nSuggestion: Remove debug print statements before production deployment.\nStatus: Accepted"
+  }
+]

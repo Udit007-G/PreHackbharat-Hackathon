@@ -2,175 +2,111 @@
 
 ## Memory-Aware Code Review Agent Powered by Hindsight
 
-### Problem
+CodeRecall AI is a small Python code review agent that remembers previous review outcomes and adapts its recommendations. Instead of repeating the same advice every time, it recalls whether similar findings were accepted or ignored before making a recommendation.
 
-Traditional code review tools repeatedly provide the same feedback every time they encounter an issue.
+## Problem
 
-For example:
+Traditional code review tools repeatedly provide the same feedback for recurring issues:
 
 * Hardcoded passwords
 * Debug print statements
-* Security misconfigurations
+* Security-sensitive configuration mistakes
 
-Even if developers repeatedly ignore or accept certain recommendations, the review system has no memory of previous interactions.
-
-As a result, reviews remain static and fail to adapt to team behavior over time.
-
----
+That feedback is static. It does not account for team behavior or previous review outcomes.
 
 ## Solution
 
-CodeRecall AI is a memory-aware code review agent built using Hindsight.
+CodeRecall AI:
 
-The agent:
-
-1. Reviews source code and identifies issues.
-2. Stores review history in Hindsight memory.
-3. Recalls relevant past review outcomes.
-4. Adapts future recommendations based on historical behavior.
-
-Instead of providing identical feedback every time, the agent learns from previous reviews and produces context-aware recommendations.
-
----
+1. Reviews Python source code for simple risk patterns.
+2. Recalls related historical review outcomes from memory.
+3. Adapts recommendations based on whether similar fixes were accepted or ignored.
+4. Runs offline with local sample memory or connects to Hindsight for persistent memory.
 
 ## Example
 
-### First Review
+First review:
 
-Issue:
+```text
+Issue: Hardcoded password detected
+Recommendation: Use environment variables instead of hardcoded credentials.
+Outcome: Ignored
+```
 
-Hardcoded password detected
+Future review:
 
-Recommendation:
-
-Use environment variables instead of hardcoded credentials.
-
-Outcome:
-
-Ignored
-
----
-
-### Future Review
-
-Issue:
-
-Hardcoded password detected
-
-Recommendation:
-
-Past fixes were often ignored.
-
-Recommend stronger enforcement.
-
-The recommendation changes because the agent remembers what happened previously.
-
----
+```text
+Issue: Hardcoded password detected
+Recommendation: Past fixes were often ignored. Recommend stronger enforcement.
+```
 
 ## Architecture
 
 ```text
 Developer Code
-      │
-      ▼
+      |
+      v
 Review Engine
-      │
-      ▼
-Hindsight Memory Bank
-      │
-      ▼
+      |
+      v
 Memory Recall
-      │
-      ▼
+      |
+      v
 Recommendation Engine
-      │
-      ▼
+      |
+      v
 Adaptive Feedback
 ```
----
-
-## Features
-
-* Memory-aware code reviews
-* Long-term memory using Hindsight
-* Adaptive recommendations
-* Historical review analysis
-* Context-aware feedback generation
-
----
-
-## Tech Stack
-
-* Python
-* Hindsight Memory Platform
-* GitHub
-
----
 
 ## Project Structure
 
-config.py
+```text
+.
+|-- config.py                 # Environment and Hindsight settings
+|-- hindsight_memory.py       # Local and Hindsight memory clients
+|-- memory_reviewer.py        # CLI review workflow
+|-- recommendation_engine.py  # Adaptive recommendation logic
+|-- reviewer.py               # Static code issue detection
+|-- sample_code.py            # Demo input
+|-- memory_seed.json          # Local sample memory for offline runs
+|-- requirements.txt          # Python dependencies
+`-- tests/                    # Regression tests
+```
 
-* Configuration and API keys
-
-reviewer.py
-
-* Code issue detection
-
-memory_reviewer.py
-
-* Memory-powered review workflow
-
-recommendation_engine.py
-
-* Adaptive recommendation generation
-
-hindsight_memory.py
-
-* Memory storage utilities
-
-test_recall.py
-
-* Memory retrieval testing
-
-sample_code.py
-
-* Example code for demonstration
-
----
-
-## Installation
-
-Clone the repository:
-
-git clone <repository-url>
+## Setup
 
 Install dependencies:
 
+```bash
 pip install -r requirements.txt
+```
 
-Create a .env file and add:
+Run the local demo:
 
-HINDSIGHT_API_KEY=your_api_key
-
-Run:
-
+```bash
 python memory_reviewer.py
+```
 
----
+Connect to Hindsight:
+
+1. Copy `.env.example` to `.env`.
+2. Add your `HINDSIGHT_API_KEY`.
+3. Run:
+
+```bash
+python memory_reviewer.py --use-hindsight
+```
+
+Run tests:
+
+```bash
+python -m unittest discover
+```
 
 ## Why Hindsight?
 
-Hindsight enables persistent memory for AI systems.
-
-By integrating Hindsight, CodeRecall AI can remember previous review outcomes and adapt future recommendations accordingly.
-
-This transforms static code reviews into evolving, memory-aware engineering assistance.
-
----
+Hindsight gives the reviewer persistent memory. CodeRecall AI uses that memory to make review feedback context-aware, so recommendations can evolve based on what happened in previous reviews.
 
 ## Hackathon Submission
 
-Built for the Hindsight Memory Challenge.
-
-Demonstrates how long-term memory can improve developer tooling by making code review feedback adaptive rather than repetitive.
+Built for the Hindsight Memory Challenge to demonstrate how long-term memory can make developer tooling more adaptive.
