@@ -6,9 +6,27 @@ def generate_recommendation(
     accepted = 0
     ignored = 0
 
+    finding_lower = finding.lower()
+
     for memory in memories:
 
         text = memory.text.lower()
+
+        # Password-related issue
+        if "password" in finding_lower:
+
+            if "password" not in text:
+                continue
+
+        # Debug-related issue
+        elif "debug" in finding_lower:
+
+            if (
+                "debug" not in text
+                and
+                "print" not in text
+            ):
+                continue
 
         if "accepted" in text:
             accepted += 1

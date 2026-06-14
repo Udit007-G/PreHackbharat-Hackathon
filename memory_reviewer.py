@@ -4,6 +4,10 @@ from hindsight_client import Hindsight
 
 from config import HINDSIGHT_API_KEY
 
+from recommendation_engine import (
+    generate_recommendation
+)
+
 client = Hindsight(
     base_url="https://api.hindsight.vectorize.io",
     api_key=HINDSIGHT_API_KEY
@@ -32,10 +36,18 @@ for finding in findings:
     print("\nRELEVANT MEMORIES:")
 
     for memory in memories.results:
-
         print("-")
         print(memory.text)
 
+    recommendation = (
+        generate_recommendation(
+            finding,
+            memories.results
+        )
+    )
+
+    print("\nFINAL RECOMMENDATION:")
+    print(recommendation)
 try:
     client.close()
 except:
