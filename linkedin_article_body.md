@@ -1,6 +1,4 @@
-﻿# How Hindsight Helped My Reviewer Remember Ignored Fixes
-
-The problem with most code review automation is not that it misses every issue. The problem is that it forgets what happened the last ten times it found one.
+﻿The problem with most code review automation is not that it misses every issue. The problem is that it forgets what happened the last ten times it found one.
 
 I ran into this while building CodeRecall Reviewer, a memory-aware code review system that uses Hindsight to connect static findings with past review outcomes. The useful idea was smaller than I expected: find a concrete issue, recall similar past findings, then change the recommendation based on whether developers usually accepted or ignored the advice.
 
@@ -30,7 +28,7 @@ The interesting part is not the detector. It is the decision to treat review fee
 
 ## Architecture Diagram
 
-![CodeRecall Reviewer architecture showing Hindsight memory in the review loop](assets/coderecall-architecture.png)
+[UPLOAD IMAGE: assets/coderecall-architecture.png]
 
 Architecture: deterministic detection finds the issue; Hindsight supplies the history; the recommendation engine decides what to do with both.
 
@@ -130,7 +128,7 @@ memories = client.recall(
 )
 ```
 
-![Terminal screenshot of Hindsight retain and recall calls](assets/hindsight-retain-recall-terminal.png)
+[UPLOAD IMAGE: assets/hindsight-retain-recall-terminal.png]
 
 Retain/recall: CodeRecall stores review outcomes in Hindsight, then queries them when a similar finding appears again.
 
@@ -291,7 +289,7 @@ Past fixes were often ignored.
 Recommend stronger enforcement.
 ```
 
-![CodeRecall Reviewer terminal output with Hindsight memories and final recommendation](assets/coderecall-review-output.png)
+[UPLOAD IMAGE: assets/coderecall-review-output.png]
 
 Output: the finding is the same, but the recommendation changes because Hindsight recalled ignored prior fixes.
 
@@ -378,3 +376,4 @@ That explanation is what keeps the system from feeling arbitrary.
 Code review automation does not need to pretend every finding is new. It can remember what happened before, notice when advice worked, and stop repeating itself when advice failed.
 
 Hindsight gave me a practical way to add that memory without turning the reviewer into an opaque blob. The detector finds the issue. Hindsight recalls the history. The recommendation engine makes a plain decision.
+

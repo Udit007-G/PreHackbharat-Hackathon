@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">CodeRecall Reviewer output with memory-aware recommendations</title>
+  <desc id="desc">A terminal-style output showing a hardcoded password finding, recalled Hindsight memories, and a final recommendation to use stronger enforcement.</desc>
+  <rect width="1200" height="700" fill="#f6f7f9"/>
+  <text x="72" y="78" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="34" font-weight="700" fill="#14171f">Memory-aware review output</text>
+  <text x="72" y="116" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" fill="#566070">The same finding changes once prior ignored fixes are recalled.</text>
+
+  <rect x="72" y="154" width="1056" height="478" rx="10" fill="#101624" stroke="#263044"/>
+  <circle cx="104" cy="188" r="7" fill="#ef4444"/>
+  <circle cx="128" cy="188" r="7" fill="#f59e0b"/>
+  <circle cx="152" cy="188" r="7" fill="#22c55e"/>
+
+  <text x="104" y="242" font-family="Consolas,Menlo,monospace" font-size="18" fill="#e5e7eb">==================================================</text>
+  <text x="104" y="284" font-family="Consolas,Menlo,monospace" font-size="18" fill="#93c5fd">CURRENT ISSUE:</text>
+  <text x="104" y="318" font-family="Consolas,Menlo,monospace" font-size="18" fill="#f8fafc">Hardcoded password detected</text>
+
+  <text x="104" y="374" font-family="Consolas,Menlo,monospace" font-size="18" fill="#93c5fd">RELEVANT HINDSIGHT MEMORIES:</text>
+  <text x="104" y="408" font-family="Consolas,Menlo,monospace" font-size="18" fill="#cbd5e1">- Issue: Hardcoded Password</text>
+  <text x="104" y="440" font-family="Consolas,Menlo,monospace" font-size="18" fill="#cbd5e1">  Suggestion: Use environment variables.</text>
+  <text x="104" y="472" font-family="Consolas,Menlo,monospace" font-size="18" fill="#cbd5e1">  Status: Ignored</text>
+
+  <text x="104" y="528" font-family="Consolas,Menlo,monospace" font-size="18" fill="#93c5fd">FINAL RECOMMENDATION:</text>
+  <text x="104" y="562" font-family="Consolas,Menlo,monospace" font-size="18" fill="#f8fafc">Past fixes were often ignored.</text>
+  <text x="104" y="596" font-family="Consolas,Menlo,monospace" font-size="18" fill="#f8fafc">Recommend stronger enforcement.</text>
+</svg>
